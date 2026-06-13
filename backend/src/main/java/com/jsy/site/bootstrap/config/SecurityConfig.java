@@ -34,6 +34,10 @@ public class SecurityConfig {
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/error").permitAll()
+                // SPA 前端页面路由，仅返回 index.html，权限由前端路由和 /api 层控制
+                .requestMatchers("/", "/index.html", "/assets/**", "/favicon.svg").permitAll()
+                .requestMatchers("/notes", "/notes/**", "/portfolio", "/about", "/chat").permitAll()
+                .requestMatchers("/admin/login", "/admin", "/admin/**").permitAll()
                 .requestMatchers("/api/auth/login").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/notes", "/api/notes/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/notes/*/comments").permitAll()

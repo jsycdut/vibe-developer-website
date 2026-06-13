@@ -1,14 +1,14 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import PublicLayout from "./layouts/PublicLayout";
+//import PublicLayout from "./layouts/PublicLayout";
 import AdminLayout from "./layouts/AdminLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import HomePage from "./pages/HomePage";
-import NotesListPage from "./pages/NotesListPage";
-import NoteDetailPage from "./pages/NoteDetailPage";
-import PortfolioPage from "./pages/PortfolioPage";
-import AboutPage from "./pages/AboutPage";
-import ChatPage from "./pages/ChatPage";
+//import HomePage from "./pages/HomePage";
+//import NotesListPage from "./pages/NotesListPage";
+//import NoteDetailPage from "./pages/NoteDetailPage";
+//import PortfolioPage from "./pages/PortfolioPage";
+//import AboutPage from "./pages/AboutPage";
+//import ChatPage from "./pages/ChatPage";
 
 import AdminLoginPage from "./pages/AdminLoginPage";
 import AdminNotesPage from "./pages/AdminNotesPage";
