@@ -85,6 +85,7 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<ChatMsg[]>([])
   const [inputText, setInputText] = useState('')
   const [panel, setPanel] = useState<'emoji' | 'attach' | null>(null)
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null)
 
   const bottomRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -139,16 +140,28 @@ export default function ChatPage() {
   const uploadAndSend = async (file: File) => {
     const formData = new FormData()
     formData.append('file', file)
-    const res = await api.post('/upload', formData)
-    const type: 'IMAGE' | 'VIDEO' = file.type.startsWith('video') ? 'VIDEO' : 'IMAGE'
-    send('/app/chat.send', {
-      sessionId,
-      senderName: nickname,
-      fromChatter: false,
-      messageType: type,
-      content: '',
-      fileUrl: res.data.url,
-    })
+    setUploadProgress(0)
+    try {
+      const res = await api.post('/upload', formData, {
+        timeout: 0,
+        onUploadProgress: (e) => {
+          if (e.total) setUploadProgress(Math.round((e.loaded / e.total) * 100))
+        },
+      })
+      const type: 'IMAGE' | 'VIDEO' = file.type.startsWith('video') ? 'VIDEO' : 'IMAGE'
+      send('/app/chat.send', {
+        sessionId,
+        senderName: nickname,
+        fromChatter: false,
+        messageType: type,
+        content: '',
+        fileUrl: res.data.url,
+      })
+    } catch {
+      alert('上传失败，请检查网络或文件大小后重试')
+    } finally {
+      setUploadProgress(null)
+    }
   }
 
   const handleFileSelect = (inputRef: React.RefObject<HTMLInputElement | null>) => async (
@@ -279,6 +292,22 @@ export default function ChatPage() {
       {/* 底部输入区 */}
       <div className="shrink-0 border-t border-black/[0.08]" style={{ background: '#F7F7F7' }}>
 
+        {/* 上传进度条 */}
+        {uploadProgress !== null && (
+          <div className="px-3 pt-2">
+            <div className="flex justify-between text-xs text-slate-500 mb-1">
+              <span>上传中...</span>
+              <span>{uploadProgress}%</span>
+            </div>
+            <div className="w-full bg-slate-200 rounded-full h-1">
+              <div
+                className="h-1 rounded-full transition-all"
+                style={{ width: `${uploadProgress}%`, background: '#07C160' }}
+              />
+            </div>
+          </div>
+        )}
+
         {/* 输入栏 */}
         <div className="flex items-end gap-1.5 px-2 py-2">
           {/* Emoji 按钮 */}
@@ -330,7 +359,8 @@ export default function ChatPage() {
             </button>
           ) : (
             <button
-              className="shrink-0 p-2 rounded-lg active:bg-black/10"
+              disabled={uploadProgress !== null}
+              className="shrink-0 p-2 rounded-lg active:bg-black/10 disabled:opacity-40"
               onClick={() => {
                 textareaRef.current?.blur()
                 setPanel(panel === 'attach' ? null : 'attach')

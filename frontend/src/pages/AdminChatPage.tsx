@@ -36,6 +36,7 @@ export default function AdminChatPage() {
   const [chatters, setChatters] = useState<string[]>([])
   const bottomRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null)
 
   const activeSession = sessions.find((s) => s.id === activeSessionId)
 
@@ -122,18 +123,30 @@ export default function AdminChatPage() {
     if (!file || !activeSessionId || !user) return
     const formData = new FormData()
     formData.append('file', file)
-    const res = await api.post('/upload', formData)
-    const type: 'IMAGE' | 'VIDEO' = file.type.startsWith('video') ? 'VIDEO' : 'IMAGE'
-    const msg: ChatMsg = {
-      sessionId: activeSessionId,
-      senderName: user.username,
-      fromChatter: true,
-      messageType: type,
-      content: '',
-      fileUrl: res.data.url,
+    setUploadProgress(0)
+    try {
+      const res = await api.post('/upload', formData, {
+        timeout: 0,
+        onUploadProgress: (ev) => {
+          if (ev.total) setUploadProgress(Math.round((ev.loaded / ev.total) * 100))
+        },
+      })
+      const type: 'IMAGE' | 'VIDEO' = file.type.startsWith('video') ? 'VIDEO' : 'IMAGE'
+      const msg: ChatMsg = {
+        sessionId: activeSessionId,
+        senderName: user.username,
+        fromChatter: true,
+        messageType: type,
+        content: '',
+        fileUrl: res.data.url,
+      }
+      send('/app/chat.send', msg)
+    } catch {
+      alert('上传失败，请检查网络或文件大小后重试')
+    } finally {
+      setUploadProgress(null)
+      e.target.value = ''
     }
-    send('/app/chat.send', msg)
-    e.target.value = ''
   }
 
   const getSessionDisplayName = (s: ChatSession) => {
@@ -287,6 +300,21 @@ export default function AdminChatPage() {
               />
             </div>
           )}
+          {/* 上传进度条 */}
+          {uploadProgress !== null && (
+            <div className="mb-2">
+              <div className="flex justify-between text-xs text-slate-500 mb-1">
+                <span>上传中...</span>
+                <span>{uploadProgress}%</span>
+              </div>
+              <div className="w-full bg-slate-200 rounded-full h-1">
+                <div
+                  className="h-1 rounded-full bg-blue-500 transition-all"
+                  style={{ width: `${uploadProgress}%` }}
+                />
+              </div>
+            </div>
+          )}
           <input type="file" ref={fileInputRef} accept="image/*,video/*" className="hidden" onChange={handleFile} />
           <div className="flex items-center gap-2">
             <button
@@ -296,7 +324,8 @@ export default function AdminChatPage() {
               <Smile size={20} />
             </button>
             <button
-              className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg"
+              disabled={uploadProgress !== null}
+              className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg disabled:opacity-40"
               onClick={() => fileInputRef.current?.click()}
             >
               <ImageIcon size={20} />
