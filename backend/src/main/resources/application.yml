@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:${user.dir}/local_site.db
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  servlet:
+    multipart:
+      max-file-size: 2GB
+      max-request-size: 2GB
+
+# 静态资源映射：/files/** → uploads/ 目录
+spring.web.resources.static-locations: file:${user.dir}/uploads/,classpath:/static/
+
+site:
+  orm-type: jpa
+  upload-dir: ${user.dir}/uploads
+  jwt:
+    secret: jsy-site-jwt-secret-key-must-be-at-least-256-bits-long-for-hs256
+    expiration-ms: 86400000  # 24 hours
+
+server:
+  port: 8080
+  tomcat:
+    max-swallow-size: -1

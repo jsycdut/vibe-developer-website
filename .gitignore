@@ -371,3 +371,7 @@ npm-debug.log
 yarn-error.log
 
 # End of https://www.toptal.com/developers/gitignore/api/maven,intellij+all,node,eclipse,react,vuejs,vue
+
+uploads/
+
+*.db
