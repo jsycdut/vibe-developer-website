@@ -313,7 +313,7 @@ export default function AdminChatPage() {
               }}
               placeholder={activeSession ? `回复 ${getSessionDisplayName(activeSession)}...` : '请先选择会话'}
               disabled={!activeSessionId}
-              className="flex-1 px-4 py-2 bg-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-sm disabled:opacity-50"
+              className="flex-1 min-w-0 px-4 py-2 bg-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-sm disabled:opacity-50"
             />
             <button
               onClick={sendText}
