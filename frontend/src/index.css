@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "devicon/devicon.min.css";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --color-brand-primary: #3b82f6;
@@ -10,6 +12,15 @@
   --color-text-secondary: #64748b;
 }
 
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -17,7 +28,7 @@
 body {
   margin: 0;
   background-color: #f8fafc;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -25,3 +36,53 @@ body {
 #root {
   min-height: 100vh;
 }
+
+.prose pre,
+.prose table {
+  overflow-x: auto;
+}
+
+.prose table {
+  display: block;
+}
+
+/* pandoc 代码高亮 - Pygments 配色 */
+.prose div.sourceCode {
+  background-color: #f8f8f8;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+.prose pre.sourceCode {
+  background-color: transparent;
+  margin: 0;
+  padding: 1rem;
+}
+code.sourceCode { color: #333; }
+code.sourceCode span.kw { color: #007020; font-weight: bold; }
+code.sourceCode span.dt { color: #902000; }
+code.sourceCode span.dv { color: #40a070; }
+code.sourceCode span.bn { color: #40a070; }
+code.sourceCode span.fl { color: #40a070; }
+code.sourceCode span.ch { color: #4070a0; }
+code.sourceCode span.st { color: #4070a0; }
+code.sourceCode span.vs { color: #4070a0; }
+code.sourceCode span.sc { color: #4070a0; }
+code.sourceCode span.co { color: #60a0b0; font-style: italic; }
+code.sourceCode span.do { color: #ba2121; font-style: italic; }
+code.sourceCode span.an { color: #60a0b0; font-weight: bold; font-style: italic; }
+code.sourceCode span.cv { color: #60a0b0; font-weight: bold; font-style: italic; }
+code.sourceCode span.in { color: #60a0b0; font-weight: bold; font-style: italic; }
+code.sourceCode span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
+code.sourceCode span.al { color: #ff0000; font-weight: bold; }
+code.sourceCode span.er { color: #ff0000; font-weight: bold; }
+code.sourceCode span.cf { color: #007020; font-weight: bold; }
+code.sourceCode span.fu { color: #06287e; }
+code.sourceCode span.bu { color: #008000; }
+code.sourceCode span.im { color: #008000; font-weight: bold; }
+code.sourceCode span.cn { color: #880000; }
+code.sourceCode span.va { color: #19177c; }
+code.sourceCode span.op { color: #666666; }
+code.sourceCode span.pp { color: #bc7a00; }
+code.sourceCode span.ss { color: #bb6688; }
+code.sourceCode span.ot { color: #007020; }

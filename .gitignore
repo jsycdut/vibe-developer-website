@@ -375,3 +375,4 @@ yarn-error.log
 uploads/
 
 *.db
+.idea/

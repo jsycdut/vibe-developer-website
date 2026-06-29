@@ -29,27 +29,28 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(AbstractHttpConfigurer::disable)
-            .cors(Customizer.withDefaults())
-            .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/error").permitAll()
-                .requestMatchers("/api/auth/login").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/notes", "/api/notes/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/notes/*/comments").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/notes/*/comments").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/upload").permitAll()
-                .requestMatchers("/files/**").permitAll()
-                .requestMatchers("/ws-connect/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/notes").hasAnyRole("EDITOR", "ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/api/notes/**").hasAnyRole("EDITOR", "ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/notes/**").hasAnyRole("EDITOR", "ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/comments/**").hasRole("ADMIN")
-                .requestMatchers("/api/chat/**").hasAnyRole("CHATTER", "ADMIN")
-                .requestMatchers("/api/users/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
-            )
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
+                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/error").permitAll()
+                        .requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/notes", "/api/notes/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/notes/*/comments").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/notes/*/comments").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/upload").permitAll()
+                        .requestMatchers("/files/**").permitAll()
+                        .requestMatchers("/ws-connect/**").permitAll()
+                        .requestMatchers("/api/article/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/notes").hasAnyRole("EDITOR", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/notes/**").hasAnyRole("EDITOR", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/notes/**").hasAnyRole("EDITOR", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/comments/**").hasRole("ADMIN")
+                        .requestMatchers("/api/chat/**").hasAnyRole("CHATTER", "ADMIN")
+                        .requestMatchers("/api/users/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
