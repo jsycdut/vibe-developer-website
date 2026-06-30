@@ -30,8 +30,10 @@ server:
 
 management:
   endpoints:
+    env:
+      show-values: ALWAYS
     web:
       exposure:
-        include: refresh, health
+        include: '*'
   server:
     port: 8081   # Actuator 走独立端口，不对外暴露

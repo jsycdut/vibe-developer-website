@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/notes/*/comments").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/upload").permitAll()
                         .requestMatchers("/files/**").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/ws-connect/**").permitAll()
                         .requestMatchers("/api/article/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/notes").hasAnyRole("EDITOR", "ADMIN")
