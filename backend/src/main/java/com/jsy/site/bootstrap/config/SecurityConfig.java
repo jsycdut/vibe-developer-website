@@ -34,6 +34,10 @@ public class SecurityConfig {
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/error").permitAll()
+                        // SPA 页面路由
+                        .requestMatchers("/", "/notes", "/notes/**", "/portfolio", "/about", "/chat", "/admin", "/admin/**").permitAll()
+                        // 前端静态资源（index.html、JS/CSS bundle、favicon 等）
+                        .requestMatchers("/index.html", "/assets/**", "/*.js", "/*.css", "/*.ico", "/*.png", "/*.svg", "/*.pdf").permitAll()
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/notes", "/api/notes/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/notes/*/comments").permitAll()

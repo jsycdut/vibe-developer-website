@@ -1,6 +1,7 @@
 package com.jsy.site.modules.content.infrastructure.parser;
 
 import com.jsy.site.modules.content.domain.model.Article;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -21,7 +22,8 @@ public class OrgFileParserService {
     private static final String RELEASE_DATE_MARK = "RELEASE_DATE";
 
     private static final String DEFAULT_AUTHOR = "jsy";
-    private static final String DEFAULT_BLOG_FILEPATH = "/Users/pg/github/jsycdut.github.io/all-blogs.org";
+    @Value("${site.blog-file}")
+    private String DEFAULT_BLOG_FILEPATH;
 
     public List<Article> parse() throws IOException {
         List<String> lines = readLines(DEFAULT_BLOG_FILEPATH);

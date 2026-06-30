@@ -18,6 +18,7 @@ spring.web.resources.static-locations: file:${user.dir}/uploads/,classpath:/stat
 site:
   orm-type: jpa
   upload-dir: ${user.dir}/uploads
+  blog-file: ${user.dir}/all-blogs.org}
   jwt:
     secret: jsy-site-jwt-secret-key-must-be-at-least-256-bits-long-for-hs256
     expiration-ms: 86400000  # 24 hours
@@ -26,3 +27,11 @@ server:
   port: 8080
   tomcat:
     max-swallow-size: -1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health
+  server:
+    port: 8081   # Actuator 走独立端口，不对外暴露
