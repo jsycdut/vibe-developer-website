@@ -52,7 +52,7 @@ public class ArticleApplicationService {
     }
 
     private String convertToHtml(String content) throws IOException, InterruptedException {
-        ProcessBuilder processBuilder = new ProcessBuilder("pandoc", "-f", "org", "-t", "html5", "--syntax-highlighting=pygments");
+        ProcessBuilder processBuilder = new ProcessBuilder("pandoc", "-f", "org", "-t", "html5", "--highlight-style=pygments");
         Process process = processBuilder.start();
         try(OutputStream os = process.getOutputStream()) {
            os.write(content.getBytes(StandardCharsets.UTF_8));
