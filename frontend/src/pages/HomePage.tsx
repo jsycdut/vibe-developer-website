@@ -3,6 +3,7 @@ import catImg from "../assets/cat.png";
 
 const LINES = [
 	"网站域名jsycdut.top备案中",
+	"域名预计上线时间20260722",
 	"keep coding,",
 	"keep learning,",
 	"happy hacking ✨ ~  jsy",
