@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import catImg from "../assets/cat.png";
 
-const LINES = ["keep coding,", "keep learning,", "happy hacking ✨ ~  jsy"];
+const LINES = [
+	"网站域名jsycdut.top备案中",
+	"keep coding,",
+	"keep learning,",
+	"happy hacking ✨ ~  jsy",
+];
 const SPEED = 80;
 
 function Typewriter() {
