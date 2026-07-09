@@ -109,7 +109,7 @@ export default function AboutPage() {
 					</a>
 					<a
 						href="/resume.pdf"
-						download="金世钰-个人简历2026.pdf"
+						download="金世钰-2026-java-服务端个人简历"
 						className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 shadow-sm text-normal text-slate-700 hover:border-indigo-300 hover:text-indigo-600 transition-colors bg-white"
 					>
 						⬇️ 下载简历
