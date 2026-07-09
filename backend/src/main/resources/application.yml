@@ -18,7 +18,7 @@ spring.web.resources.static-locations: file:${user.dir}/uploads/,classpath:/stat
 site:
   orm-type: jpa
   upload-dir: ${user.dir}/uploads
-  blog-file: ${user.dir}/all-blogs.org}
+  blog-file: ${user.dir}/all-blogs.org
   jwt:
     secret: jsy-site-jwt-secret-key-must-be-at-least-256-bits-long-for-hs256
     expiration-ms: 86400000  # 24 hours
