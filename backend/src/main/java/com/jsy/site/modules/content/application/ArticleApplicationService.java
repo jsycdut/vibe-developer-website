@@ -24,7 +24,7 @@ public class ArticleApplicationService {
         this.orgParser = parser;
     }
 
-    @Scheduled(cron = "59 59 23 * * ?")
+    @Scheduled(cron = "0 */5 * * * ?")
     public void refresh() throws IOException {
         List<Article> articles = orgParser.parse();
         for (Article article : articles) {
