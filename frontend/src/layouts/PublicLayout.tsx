@@ -38,9 +38,18 @@ export default function PublicLayout() {
 				<Outlet />
 			</main>
 			<footer className="border-t border-slate-100 mt-1">
-				<div className="max-w-4xl mx-auto px-6 py-6 flex justify-center">
+				<div className="max-w-4xl mx-auto px-6 py-6 flex flex-col items-center">
 					<p className="text-xs text-slate-400 font-mono tracking-wide">
 						designed & made by jsy
+					</p>
+					<p>
+						<a
+							href="https://beian.miit.gov.cn/"
+							target="_blank"
+							className="text-xs text-blue-400 font-mono"
+						>
+							蜀ICP备2026038026号-1
+						</a>
 					</p>
 				</div>
 			</footer>
